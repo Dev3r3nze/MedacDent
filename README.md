@@ -1,5 +1,5 @@
-# Tienda Online
+# Aplicación de consultas
 *Trabajo del grado de DAW
 
-## Aplicación de citas para una clinica dental
+## Aplicación de consultas/citas para una clinica dental
 En desarrollo...
