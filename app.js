@@ -1,11 +1,6 @@
-
-
 addEventListener("load", function Start(){
     Mostrar(2)
-
-    
 })
-
 
 function Mostrar(n){
     switch(n){
@@ -33,8 +28,6 @@ function Mostrar(n){
 
 var citas = []
 var id = 0
-
-
 
 function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,observaciones){
     this.dia = dia
@@ -109,8 +102,6 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     node.appendChild(observacionesNode)
 
     document.getElementById("tablaCitas").childNodes[1].childNodes[1].appendChild(node)
-
-    
 }
 
 function Validation(){
@@ -126,7 +117,6 @@ function Validation(){
     fechaNacimiento = document.getElementById("fechaValor").value
     observaciones = document.getElementById("observacionesValor").value
     
-
     dia = Number.parseInt(dia)
     if(dia > 31 || dia <= 0 || isNaN(dia)) {
         valido = false
