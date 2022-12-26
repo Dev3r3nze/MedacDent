@@ -101,6 +101,9 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     observacionesNode.appendChild(observacionesNodeText)
     node.appendChild(observacionesNode)
 
+    var modNode = document.createElement("td")
+    
+
     document.getElementById("tablaCitas").childNodes[1].childNodes[1].appendChild(node)
 }
 
@@ -177,4 +180,47 @@ function Validation(){
         crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones)
     }
     console.log(nombre)
+}
+
+
+function MostrarMod(){
+    if(document.getElementById("modBtn").innerHTML == "<p>Modificar Citas</p>"){
+        i = 0
+        while(document.getElementsByClassName("modCol")[i] != null){
+            document.getElementsByClassName("modCol")[i].style.display = "block"
+            i++
+        document.getElementById("modBtn").innerHTML = "<p>Hecho</p>"
+    }
+    }else {
+        i = 0
+        while(document.getElementsByClassName("modCol")[i] != null){
+            document.getElementsByClassName("modCol")[i].style.display = "none"
+            i++
+        }
+        document.getElementById("modBtn").innerHTML = "<p>Modificar Citas</p>"
+    }
+}
+
+function DeleteCita(element){
+    element.parentElement.parentElement.remove()
+}
+
+
+function EditCita(element){
+
+    console.log(citas[0])
+
+    document.getElementById("diaValor").value = dia
+    document.getElementById("mesValor").value = mes
+    document.getElementById("añoValor").value = año
+    document.getElementById("horaValor").value = hora
+    document.getElementById("nombreValor").value = nombre
+    document.getElementById("apellidosValor").value = apellidos
+    document.getElementById("telefonoValor").value = telefono
+    document.getElementById("dniValor").value = dni
+    document.getElementById("fechaValor").value = fechaNacimiento
+    document.getElementById("observacionesValor").value = observaciones
+
+    Mostrar(1)
+
 }

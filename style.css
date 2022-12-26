@@ -236,3 +236,12 @@ form{
     grid-column: 2;
     grid-row: 2;
 }
+
+.icon{
+    width: 3vh;
+    height: 3vh;
+}
+
+.modCol{
+    display: none;
+}
