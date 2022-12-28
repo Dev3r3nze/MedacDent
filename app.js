@@ -1,6 +1,4 @@
-addEventListener("load", function Start(){
-    Mostrar(2)
-})
+
 
 function Mostrar(n){
     switch(n){
@@ -29,6 +27,12 @@ function Mostrar(n){
 var citas = []
 var id = 0
 
+addEventListener("load", function Start(){
+    Mostrar(2)
+    citas.push(new cita("1","1","2000","00:00","nombre","apellidos","612-12-12-12","2000-12-12", "12345678Y", ""))
+    
+})
+
 function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,observaciones){
     this.dia = dia
     this.mes = mes
@@ -42,9 +46,14 @@ function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,ob
     this.observaciones = observaciones
 }
 
-function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones){
+function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,manual,num){
     document.getElementById("vacioRow").style.display = "none"
-    citas[id] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+    if(manual == false){
+        citas[id] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+    }else{
+        citas[num] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+    }
+    
     console.log(citas)
     id++
 
@@ -102,12 +111,30 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     node.appendChild(observacionesNode)
 
     var modNode = document.createElement("td")
-    
+
+    var img1 = document.createElement("img")
+    var ruta1node =  document.createAttribute("src")
+    ruta1node.value = "delete.png"
+    img1.setAttributeNode(ruta1node)
+    var img2 = document.createElement("img")
+    var ruta2node =  document.createAttribute("src")
+    ruta2node.value = "edit.png"
+    img1.setAttributeNode(ruta2node)
+    const clase1 = document.createAttribute("class");
+    clase1.value = "icon";
+    const clase2 = document.createAttribute("class");
+    clase2.value = "icon";
+    img1.setAttributeNode(clase1);
+    img2.setAttributeNode(clase2);
+    modNode.appendChild(img1)
+    modNode.appendChild(img2)
+    node.appendChild(modNode)
 
     document.getElementById("tablaCitas").childNodes[1].childNodes[1].appendChild(node)
 }
 
-function Validation(){
+
+function Validation(manual,num){
     var valido = true
     dia = document.getElementById("diaValor").value
     mes = document.getElementById("mesValor").value
@@ -175,11 +202,14 @@ function Validation(){
         document.getElementById("errFecha").style.display="block"
     } else document.getElementById("errFecha").style.display = "none"
 
-    if(valido){
+    if(valido && manual == false){
         Mostrar(2)
-        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones)
+        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,false,0)
     }
-    console.log(nombre)
+    else if(valido && manual){
+        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,true,num)
+       
+    }
 }
 
 
@@ -199,6 +229,8 @@ function MostrarMod(){
         }
         document.getElementById("modBtn").innerHTML = "<p>Modificar Citas</p>"
     }
+    document.getElementById("nuevaCitaContent").style.display = "none"
+        document.getElementById("btnNueva").style.display = "flex"
 }
 
 function DeleteCita(element){
@@ -207,20 +239,33 @@ function DeleteCita(element){
 
 
 function EditCita(element){
+    num = 1
 
-    console.log(citas[0])
+    if(document.getElementById("nuevaCitaContent").style.display == "flex"){
+        document.getElementById("nuevaCitaContent").style.display = "none"
+        document.getElementById("btnNueva").style.display = "flex"
 
-    document.getElementById("diaValor").value = dia
-    document.getElementById("mesValor").value = mes
-    document.getElementById("añoValor").value = año
-    document.getElementById("horaValor").value = hora
-    document.getElementById("nombreValor").value = nombre
-    document.getElementById("apellidosValor").value = apellidos
-    document.getElementById("telefonoValor").value = telefono
-    document.getElementById("dniValor").value = dni
-    document.getElementById("fechaValor").value = fechaNacimiento
-    document.getElementById("observacionesValor").value = observaciones
 
-    Mostrar(1)
+    }else{
+        console.log(citas[num])
+
+        document.getElementById("diaValor").value = citas[num].dia
+        document.getElementById("mesValor").value = citas[num].mes
+        document.getElementById("añoValor").value = citas[num].año
+        document.getElementById("horaValor").value = citas[num].hora
+        document.getElementById("nombreValor").value = citas[num].nombre
+        document.getElementById("apellidosValor").value = citas[num].apellidos
+        document.getElementById("telefonoValor").value = citas[num].telefono
+        document.getElementById("dniValor").value = citas[num].dni
+        document.getElementById("fechaValor").value = citas[num].fechaNacimiento
+        document.getElementById("observacionesValor").value = citas[num].observaciones
+    
+        document.getElementById("nuevaCitaContent").style.display = "flex"
+        document.getElementById("btnNueva").style.display = "none"
+
+    }
+    
+    Validation(true,num)
+    console.log(citas[num])
 
 }
