@@ -25,12 +25,14 @@ function Mostrar(n){
 }
 
 var citas = []
-var id = 0
+var id = 1
 
 addEventListener("load", function Start(){
     Mostrar(2)
     citas.push(new cita("1","1","2000","00:00","nombre","apellidos","612-12-12-12","2000-12-12", "12345678Y", ""))
-    
+    console.log(citas)
+
+
 })
 
 function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,observaciones){
@@ -54,10 +56,12 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
         citas[num] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
     }
     
-    console.log(citas)
     id++
 
     var node = document.createElement("tr");
+    const idtr = document.createAttribute("id");
+    idtr.value = id;
+    node.setAttributeNode(idtr);
 
     var diaNode = document.createElement("td")
     var diaNodeText = document.createTextNode(dia)
@@ -119,15 +123,23 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     var img2 = document.createElement("img")
     var ruta2node =  document.createAttribute("src")
     ruta2node.value = "edit.png"
-    img1.setAttributeNode(ruta2node)
+    img2.setAttributeNode(ruta2node)
     const clase1 = document.createAttribute("class");
     clase1.value = "icon";
     const clase2 = document.createAttribute("class");
     clase2.value = "icon";
     img1.setAttributeNode(clase1);
     img2.setAttributeNode(clase2);
+    const onclick1 = document.createAttribute("onclick");
+    onclick1.valonclick1ue = "DeleteCita(this)";
+    const onclick2 = document.createAttribute("onclick");
+    onclick2.value = "EditCita(this)";
+    img1.setAttributeNode(onclick1);
+    img2.setAttributeNode(onclick2);
     modNode.appendChild(img1)
     modNode.appendChild(img2)
+
+
     node.appendChild(modNode)
 
     document.getElementById("tablaCitas").childNodes[1].childNodes[1].appendChild(node)
@@ -239,11 +251,19 @@ function DeleteCita(element){
 
 
 function EditCita(element){
-    num = 1
 
+    var all = document.getElementsByTagName('tr');
+    for (var i = 0, o; (o = all[i]) != null; i++) {
+        if (o.id == element.parentElement.parentElement.id) {
+            console.log(i-2)
+            num=i-2
+        }
+    }
+    
     if(document.getElementById("nuevaCitaContent").style.display == "flex"){
         document.getElementById("nuevaCitaContent").style.display = "none"
         document.getElementById("btnNueva").style.display = "flex"
+        document.getElementById("btnGuardar").style.display = "none"
 
 
     }else{
@@ -256,16 +276,17 @@ function EditCita(element){
         document.getElementById("nombreValor").value = citas[num].nombre
         document.getElementById("apellidosValor").value = citas[num].apellidos
         document.getElementById("telefonoValor").value = citas[num].telefono
-        document.getElementById("dniValor").value = citas[num].dni
-        document.getElementById("fechaValor").value = citas[num].fechaNacimiento
+        document.getElementById("dniValor").value = citas[num].fechaNacimiento
+        document.getElementById("fechaValor").value = citas[num].dni
         document.getElementById("observacionesValor").value = citas[num].observaciones
     
         document.getElementById("nuevaCitaContent").style.display = "flex"
         document.getElementById("btnNueva").style.display = "none"
+        document.getElementById("btnGuardar").style.display = "flex"
 
     }
     
-    Validation(true,num)
-    console.log(citas[num])
+    
+    
 
 }
