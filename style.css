@@ -43,10 +43,11 @@ body{
     justify-content: center;
 }
 
-#btnGuardar{
+#btnGuardar,#btnGuardarEditada{
     border: 0;
     width: 100%;
 }
+
 
 .btnCitas:hover, #modBtn:hover{
     cursor: pointer;

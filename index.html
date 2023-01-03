@@ -20,45 +20,45 @@
                 <p class="title">cita</p>
                 <div class="btnContainer">
                     <div id="dia"> 
-                        <input type="number"  placeholder="Día... 1" id="diaValor">
+                        <input type="number"  placeholder="Día... 1" id="diaValor" value="1">
                         <p class="error" id="errDia">Num 1-30
                         </p>
                     </div>
                     <div id="mes"> 
-                        <input type="number"  placeholder="Mes... 1" id="mesValor">
+                        <input type="number"  placeholder="Mes... 1" id="mesValor" value="1">
                         <p class="error" id="errMes">Num 1-12</p>
                     </div>
                     <div id="año"> 
-                        <input type="number"  placeholder="Año... 2022" min="2022" id="añoValor">
+                        <input type="number"  placeholder="Año... 2022" min="2022" id="añoValor" value="2022">
                         <p class="error" id="errAño">Mín: 2022, máx:2150</p>
                     </div>
                     <div id="hora"> 
-                        <input type=""text""  placeholder="Hora... 00:00" id="horaValor">
+                        <input type=""text""  placeholder="Hora... 00:00" id="horaValor" value="00:00">
                         <p class="error" id="errHora">Formato: 00:00</p>
                     </div>
                 </div>
                 <p class="title">persona</p>
                 <div class="btnContainer">
                     <div id="nombre"> 
-                        <input type="text" placeholder="Nombre..." id="nombreValor">
+                        <input type="text" placeholder="Nombre..." id="nombreValor" value="nombre">
                         <p class="error" id="errNombre">No puede contener números</p>
                     </div>
                     <div id="apellidos"> 
-                        <input type="text" placeholder="Apellidos..." id="apellidosValor">
+                        <input type="text" placeholder="Apellidos..." id="apellidosValor" value="apellido">
                         <p class="error" id="errApellido">No puede contener números</p>
                     </div>
                     <div id="dni"> 
-                        <input type="text" placeholder="Dni... 00000000y" id="dniValor">
+                        <input type="text" placeholder="Dni... 00000000y" id="dniValor" value="12312312A">
                         <p class="error" id="errDNI">Formato: 00000000y</p>
                     </div>
                     <div id="telefono"> 
-                        <input type="tel" placeholder="Telf... 000-00-00-00" id="telefonoValor" pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}" >
+                        <input type="tel" placeholder="Telf... 000-00-00-00" id="telefonoValor" value="123-12-12-12" pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}-[0-9]{2}" >
                         <p class="error" id="errTelefono">Formato: 000-00-00-00</p>
                     </div>
                     
                 </div>
                 <div id="fechaNacimiento"> 
-                    <input type="text" placeholder="Nacimiento... AAAA-MM-DD" id="fechaValor">
+                    <input type="text" placeholder="Nacimiento... AAAA-MM-DD" id="fechaValor" value="2000-12-12">
                     <p class="error" id="errFecha">Formato: AAAA-MM-DD</p>
                 </div>
                 <p class="title">observaciones</p>
@@ -66,7 +66,8 @@
                     <textarea name="" cols="30" rows="5" id="observacionesValor"  maxlength="162"></textarea>
                 </div>
             </div>
-            <input type="button" class="btnCitas" id="btnGuardar" value="Guardar cita" onclick="Validation(false,0)">
+            <input type="button" class="btnCitas" id="btnGuardar" value="Guardar cita" onclick="Validation(false)">
+            <input type="button" class="btnCitas" id="btnGuardarEditada" value="Guardar cita" onclick="Validation(true)">
         </form>
 
         </div>
@@ -90,23 +91,7 @@
                         <td colspan="11">Vacio</td>
                     </tr> 
 
-                    <!-- Borrar para la version final-->
-                    <tr id="0">
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2000</td>
-                        <td>00:00</td>
-                        <td>nombre</td>
-                        <td>apellido</td>
-                        <td>612-12-12-12</td>
-                        <td>12345678Y</td>
-                        <td>2000-12-12</td>
-                        <td></td>
-                        <td class="modCol">
-                            <img src="delete.png" alt="" class="icon" onclick="DeleteCita(this)">
-                            <img src="edit.png" alt="" class="icon" onclick="EditCita(this)">
-                    </tr>
-                    <!-- Borrar -->
+                    
 
                     
                 </table>

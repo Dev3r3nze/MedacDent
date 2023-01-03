@@ -25,12 +25,15 @@ function Mostrar(n){
 }
 
 var citas = []
-var id = 1
+var id = 0
+var numEdit = 0
+var elementEditando = null
 
 addEventListener("load", function Start(){
     Mostrar(2)
-    citas.push(new cita("1","1","2000","00:00","nombre","apellidos","612-12-12-12","2000-12-12", "12345678Y", ""))
-    console.log(citas)
+    //citas.push(new cita("1","1","2000","00:00","nombre","apellidos","612-12-12-12","2000-12-12", "12345678Y", ""))
+    //console.log(citas)
+    document.getElementById("btnGuardarEditada").style.display = "none"
 
 
 })
@@ -48,15 +51,19 @@ function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,ob
     this.observaciones = observaciones
 }
 
-function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,manual,num){
+function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,manual){
     document.getElementById("vacioRow").style.display = "none"
     if(manual == false){
         citas[id] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+        id++
     }else{
-        citas[num] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+        citas[numEdit] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+        console.log("Guarda en: " + numEdit)
+        elementEditando.parentElement.parentElement.remove()
+
     }
     
-    id++
+    
 
     var node = document.createElement("tr");
     const idtr = document.createAttribute("id");
@@ -131,14 +138,17 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     img1.setAttributeNode(clase1);
     img2.setAttributeNode(clase2);
     const onclick1 = document.createAttribute("onclick");
-    onclick1.valonclick1ue = "DeleteCita(this)";
+    onclick1.value = "DeleteCita(this)";
     const onclick2 = document.createAttribute("onclick");
     onclick2.value = "EditCita(this)";
+    const claseCol = document.createAttribute("class")
+    claseCol.value = "modCol"
+
     img1.setAttributeNode(onclick1);
     img2.setAttributeNode(onclick2);
     modNode.appendChild(img1)
     modNode.appendChild(img2)
-
+    modNode.setAttributeNode(claseCol)
 
     node.appendChild(modNode)
 
@@ -146,7 +156,7 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
 }
 
 
-function Validation(manual,num){
+function Validation(manual){
     var valido = true
     dia = document.getElementById("diaValor").value
     mes = document.getElementById("mesValor").value
@@ -216,10 +226,10 @@ function Validation(manual,num){
 
     if(valido && manual == false){
         Mostrar(2)
-        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,false,0)
+        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,false)
     }
     else if(valido && manual){
-        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,true,num)
+        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,true)
        
     }
 }
@@ -247,8 +257,8 @@ function MostrarMod(){
 
 function DeleteCita(element){
     element.parentElement.parentElement.remove()
+    id--
 }
-
 
 function EditCita(element){
 
@@ -259,11 +269,12 @@ function EditCita(element){
             num=i-2
         }
     }
+    elementEditando = element
     
     if(document.getElementById("nuevaCitaContent").style.display == "flex"){
         document.getElementById("nuevaCitaContent").style.display = "none"
         document.getElementById("btnNueva").style.display = "flex"
-        document.getElementById("btnGuardar").style.display = "none"
+        document.getElementById("btnGuardarEditada").style.display = "none"
 
 
     }else{
@@ -282,11 +293,7 @@ function EditCita(element){
     
         document.getElementById("nuevaCitaContent").style.display = "flex"
         document.getElementById("btnNueva").style.display = "none"
-        document.getElementById("btnGuardar").style.display = "flex"
-
+        document.getElementById("btnGuardarEditada").style.display = "flex"
     }
-    
-    
-    
-
+    numEdit = num
 }
