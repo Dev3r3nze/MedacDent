@@ -232,6 +232,16 @@ function Validation(manual){
         crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,true)
        
     }
+    document.getElementById("btnGuardarEditada").style.display = "none"
+    document.getElementById("nuevaCitaContent").style.display = "none"
+
+    if(document.getElementById("modBtn").innerHTML == "<p>Hecho</p>"){
+        i = 0
+        while(document.getElementsByClassName("modCol")[i] != null){
+            document.getElementsByClassName("modCol")[i].style.display = "block"
+            i++
+        }
+    }
 }
 
 
@@ -252,12 +262,19 @@ function MostrarMod(){
         document.getElementById("modBtn").innerHTML = "<p>Modificar Citas</p>"
     }
     document.getElementById("nuevaCitaContent").style.display = "none"
-        document.getElementById("btnNueva").style.display = "flex"
+    document.getElementById("btnGuardar").style.display = "none"
+    document.getElementById("btnNueva").style.display = "flex"
 }
 
 function DeleteCita(element){
     element.parentElement.parentElement.remove()
+    citas.splice(numEdit,1)
     id--
+    console.log(document.getElementsByTagName("td").length)
+    if(document.getElementsByTagName("td").length == 1){
+        document.getElementById("vacioRow").style.display = "table-row"
+
+    }
 }
 
 function EditCita(element){
@@ -278,7 +295,6 @@ function EditCita(element){
 
 
     }else{
-        console.log(citas[num])
 
         document.getElementById("diaValor").value = citas[num].dia
         document.getElementById("mesValor").value = citas[num].mes
@@ -295,5 +311,8 @@ function EditCita(element){
         document.getElementById("btnNueva").style.display = "none"
         document.getElementById("btnGuardarEditada").style.display = "flex"
     }
+    console.log(citas)
+
     numEdit = num
+    
 }
