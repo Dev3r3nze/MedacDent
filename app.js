@@ -1,7 +1,4 @@
-var fecha = new Date()
-var duracion = fecha.getTime() + 60*1000*60
-fecha.setTime(duracion)
-var expira = fecha.toUTCString();
+
 
 function Mostrar(n){
     switch(n){
@@ -38,7 +35,26 @@ addEventListener("load", function Start(){
     //console.log(citas)
     document.getElementById("btnGuardarEditada").style.display = "none"
     //CogerCookies()
+    var startStr = localStorage.getItem("citas")
+    var startId = localStorage.getItem("id")
+    //console.log(startId)
 
+    split = startStr.split("\n")
+    for(i = 0; i < parseInt(startId);i++){
+        var startDia = split[i].split(",")[0].trim()
+        var startMes = split[i].split(",")[1].trim()
+        var startAño = split[i].split(",")[2].trim()
+        var startHora = split[i].split(",")[3].trim()
+        var startNombre = split[i].split(",")[4].trim()
+        var startApellidos = split[i].split(",")[5].trim()
+        var startTelef = split[i].split(",")[6].trim()
+        var startFecha = split[i].split(",")[7].trim()
+        var startDNI = split[i].split(",")[8].trim()
+        var startObver = split[i].split(",")[9].trim()
+        
+
+        crearCita(startDia, startMes, startAño, startHora, startNombre, startApellidos, startTelef, startFecha, startDNI, startObver, false)
+    }
 })
 
 function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,observaciones){
@@ -61,7 +77,7 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
         id++
     }else{
         citas[numEdit] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
-        console.log("Guarda en: " + numEdit)
+        //console.log("Guarda en: " + numEdit)
         elementEditando.parentElement.parentElement.remove()
 
     }
@@ -245,7 +261,7 @@ function Validation(manual){
             i++
         }
     }
-    GuardarCookies()
+    GuardarStorage()
 }
 
 
@@ -274,11 +290,12 @@ function DeleteCita(element){
     element.parentElement.parentElement.remove()
     citas.splice(numEdit,1)
     id--
-    console.log(document.getElementsByTagName("td").length)
+    //console.log(document.getElementsByTagName("td").length)
     if(document.getElementsByTagName("td").length == 1){
         document.getElementById("vacioRow").style.display = "table-row"
 
     }
+    GuardarStorage()
 }
 
 function EditCita(element){
@@ -286,7 +303,7 @@ function EditCita(element){
     var all = document.getElementsByTagName('tr');
     for (var i = 0, o; (o = all[i]) != null; i++) {
         if (o.id == element.parentElement.parentElement.id) {
-            console.log(i-2)
+            //console.log(i-2)
             num=i-2
         }
     }
@@ -315,63 +332,33 @@ function EditCita(element){
         document.getElementById("btnNueva").style.display = "none"
         document.getElementById("btnGuardarEditada").style.display = "flex"
     }
-    console.log(citas)
+    //console.log(citas)
 
     numEdit = num
     
 }
 
-
-function setCookie(cname,cvalue,exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires=" + d.toGMTString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";";
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+function GuardarStorage(){
+    localStorage.clear()
+    strCitas = ""
+    strId = ""
+    for(var i = 0; i < citas.length; i++){
+        strCitas += citas[i].dia + ", "
+        strCitas += citas[i].mes + ", "
+        strCitas += citas[i].año + ", "
+        strCitas += citas[i].hora + ", "
+        strCitas += citas[i].nombre + ", "
+        strCitas += citas[i].apellidos + ", "
+        strCitas += citas[i].telefono + ", "
+        strCitas += citas[i].fechaNacimiento + ", "
+        strCitas += citas[i].dni + ", "
+        strCitas += citas[i].observaciones
+        strCitas += "\n"
+        localStorage.setItem("id",i+1)
+        
     }
-    return "";
+    localStorage.setItem("citas",strCitas)
+    var x = localStorage.getItem("citas")
+    console.log(x)
 }
-b = [0,1,2,3,4]
-
-for(a=0;a<b.length;a++){
-    if(typeof b[a] === 'string'){
-        setCookie(b[a],b[a]);
-    }else{
-        setCookie(b[a].toString,b[a]);
-    }
-    console.log("a")
-
-}
-for(a=0;a<b.length;a++){
-    if(typeof b[a] === 'string'){
-        b[a] = getCookie(b[a])
-    }else{
-        b[a] = getCookie(b[a].toString)
-    }
-}
-/*
-function CogerCookies(){
-    cookieStr = document.cookie.split(",");
-    for(var i = 0; i < cookieStr.length; i++)
-    {
-        document.getElementById(i+1).innerHTML = citas[i];
-    }
-}*/
-document.cookie = "username=John Doe";
-
-
-let x = document.cookie;
-
-console.log(x)
+//localStorage.clear()
