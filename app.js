@@ -1,4 +1,7 @@
-
+var fecha = new Date()
+var duracion = fecha.getTime() + 60*1000*60
+fecha.setTime(duracion)
+var expira = fecha.toUTCString();
 
 function Mostrar(n){
     switch(n){
@@ -34,7 +37,7 @@ addEventListener("load", function Start(){
     //citas.push(new cita("1","1","2000","00:00","nombre","apellidos","612-12-12-12","2000-12-12", "12345678Y", ""))
     //console.log(citas)
     document.getElementById("btnGuardarEditada").style.display = "none"
-
+    //CogerCookies()
 
 })
 
@@ -242,6 +245,7 @@ function Validation(manual){
             i++
         }
     }
+    GuardarCookies()
 }
 
 
@@ -278,7 +282,7 @@ function DeleteCita(element){
 }
 
 function EditCita(element){
-
+    //CogerCookies()
     var all = document.getElementsByTagName('tr');
     for (var i = 0, o; (o = all[i]) != null; i++) {
         if (o.id == element.parentElement.parentElement.id) {
@@ -316,3 +320,58 @@ function EditCita(element){
     numEdit = num
     
 }
+
+
+function setCookie(cname,cvalue,exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+b = [0,1,2,3,4]
+
+for(a=0;a<b.length;a++){
+    if(typeof b[a] === 'string'){
+        setCookie(b[a],b[a]);
+    }else{
+        setCookie(b[a].toString,b[a]);
+    }
+    console.log("a")
+
+}
+for(a=0;a<b.length;a++){
+    if(typeof b[a] === 'string'){
+        b[a] = getCookie(b[a])
+    }else{
+        b[a] = getCookie(b[a].toString)
+    }
+}
+/*
+function CogerCookies(){
+    cookieStr = document.cookie.split(",");
+    for(var i = 0; i < cookieStr.length; i++)
+    {
+        document.getElementById(i+1).innerHTML = citas[i];
+    }
+}*/
+document.cookie = "username=John Doe";
+
+
+let x = document.cookie;
+
+console.log(x)
