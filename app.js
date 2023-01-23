@@ -1,5 +1,3 @@
-
-
 function Mostrar(n){
     switch(n){
         case 1:
@@ -38,12 +36,11 @@ addEventListener("load", function Start(){
     var startStr = localStorage.getItem("citas")
     var startId = localStorage.getItem("id")
     //console.log(startId)
-
     split = startStr.split("\n")
     for(i = 0; i < parseInt(startId);i++){
         var startDia = split[i].split(",")[0].trim()
         var startMes = split[i].split(",")[1].trim()
-        var startAño = split[i].split(",")[2].trim()
+        var startyear = split[i].split(",")[2].trim()
         var startHora = split[i].split(",")[3].trim()
         var startNombre = split[i].split(",")[4].trim()
         var startApellidos = split[i].split(",")[5].trim()
@@ -51,16 +48,14 @@ addEventListener("load", function Start(){
         var startFecha = split[i].split(",")[7].trim()
         var startDNI = split[i].split(",")[8].trim()
         var startObver = split[i].split(",")[9].trim()
-        
-
-        crearCita(startDia, startMes, startAño, startHora, startNombre, startApellidos, startTelef, startFecha, startDNI, startObver, false)
+        crearCita(startDia, startMes, startyear, startHora, startNombre, startApellidos, startTelef, startFecha, startDNI, startObver, false)
     }
 })
 
-function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,observaciones){
+function cita(dia,mes,year,hora,nombre,apellidos,telefono,fechaNacimiento,dni,observaciones){
     this.dia = dia
     this.mes = mes
-    this.año = año
+    this.year = year
     this.hora = hora
     this.nombre = nombre
     this.apellidos = apellidos
@@ -70,20 +65,17 @@ function cita(dia,mes,año,hora,nombre,apellidos,telefono,fechaNacimiento,dni,ob
     this.observaciones = observaciones
 }
 
-function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,manual){
+function crearCita(dia,mes,year,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,manual){
     document.getElementById("vacioRow").style.display = "none"
     if(manual == false){
-        citas[id] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+        citas[id] = new cita(dia,mes,year,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
         id++
     }else{
-        citas[numEdit] = new cita(dia,mes,año,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
+        citas[numEdit] = new cita(dia,mes,year,hora,nombre,apellidos,telefono, dni,fechaNacimiento,observaciones)
         //console.log("Guarda en: " + numEdit)
         elementEditando.parentElement.parentElement.remove()
-
     }
     
-    
-
     var node = document.createElement("tr");
     const idtr = document.createAttribute("id");
     idtr.value = id;
@@ -99,10 +91,10 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     mesNode.appendChild(mesNodeText)
     node.appendChild(mesNode)
 
-    var añoNode = document.createElement("td")
-    var añoNodeText = document.createTextNode(año)
-    añoNode.appendChild(añoNodeText)
-    node.appendChild(añoNode)
+    var yearNode = document.createElement("td")
+    var yearNodeText = document.createTextNode(year)
+    yearNode.appendChild(yearNodeText)
+    node.appendChild(yearNode)
 
     var horaNode = document.createElement("td")
     var horaNodeText = document.createTextNode(hora)
@@ -133,7 +125,6 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     var fechaNacimientoNodeText = document.createTextNode(fechaNacimiento)
     fechaNacimientoNode.appendChild(fechaNacimientoNodeText)
     node.appendChild(fechaNacimientoNode)
-    
 
     var observacionesNode = document.createElement("td")
     var observacionesNodeText = document.createTextNode(observaciones)
@@ -174,12 +165,11 @@ function crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimien
     document.getElementById("tablaCitas").childNodes[1].childNodes[1].appendChild(node)
 }
 
-
 function Validation(manual){
     var valido = true
     dia = document.getElementById("diaValor").value
     mes = document.getElementById("mesValor").value
-    año = document.getElementById("añoValor").value
+    year = document.getElementById("yearValor").value
     hora = document.getElementById("horaValor").value
     nombre = document.getElementById("nombreValor").value
     apellidos = document.getElementById("apellidosValor").value
@@ -201,11 +191,11 @@ function Validation(manual){
     } else document.getElementById("errMes").style.display = "none"
 
 
-    año = Number.parseInt(año)
-    if(año > 2150 || año <= 2021 || isNaN(año)) {
+    year = Number.parseInt(year)
+    if(year > 2150 || year <= 2021 || isNaN(year)) {
         valido = false
-        document.getElementById("errAño").style.display="block"
-    } else document.getElementById("errAño").style.display = "none"
+        document.getElementById("erryear").style.display="block"
+    } else document.getElementById("erryear").style.display = "none"
 
     horaArr = hora.split(":")
     horaChars = hora.split("")
@@ -245,10 +235,10 @@ function Validation(manual){
 
     if(valido && manual == false){
         Mostrar(2)
-        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,false)
+        crearCita(dia,mes,year,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,false)
     }
     else if(valido && manual){
-        crearCita(dia,mes,año,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,true)
+        crearCita(dia,mes,year,hora,nombre,apellidos,telefono,dni,fechaNacimiento,observaciones,true)
        
     }
     document.getElementById("btnGuardarEditada").style.display = "none"
@@ -313,13 +303,10 @@ function EditCita(element){
         document.getElementById("nuevaCitaContent").style.display = "none"
         document.getElementById("btnNueva").style.display = "flex"
         document.getElementById("btnGuardarEditada").style.display = "none"
-
-
     }else{
-
         document.getElementById("diaValor").value = citas[num].dia
         document.getElementById("mesValor").value = citas[num].mes
-        document.getElementById("añoValor").value = citas[num].año
+        document.getElementById("yearValor").value = citas[num].year
         document.getElementById("horaValor").value = citas[num].hora
         document.getElementById("nombreValor").value = citas[num].nombre
         document.getElementById("apellidosValor").value = citas[num].apellidos
@@ -333,9 +320,7 @@ function EditCita(element){
         document.getElementById("btnGuardarEditada").style.display = "flex"
     }
     //console.log(citas)
-
     numEdit = num
-    
 }
 
 function GuardarStorage(){
@@ -345,7 +330,7 @@ function GuardarStorage(){
     for(var i = 0; i < citas.length; i++){
         strCitas += citas[i].dia + ", "
         strCitas += citas[i].mes + ", "
-        strCitas += citas[i].año + ", "
+        strCitas += citas[i].year + ", "
         strCitas += citas[i].hora + ", "
         strCitas += citas[i].nombre + ", "
         strCitas += citas[i].apellidos + ", "
