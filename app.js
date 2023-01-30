@@ -135,11 +135,11 @@ function crearCita(dia,mes,year,hora,nombre,apellidos,telefono,dni,fechaNacimien
 
     var img1 = document.createElement("img")
     var ruta1node =  document.createAttribute("src")
-    ruta1node.value = "delete.png"
+    ruta1node.value = "images/delete.png"
     img1.setAttributeNode(ruta1node)
     var img2 = document.createElement("img")
     var ruta2node =  document.createAttribute("src")
-    ruta2node.value = "edit.png"
+    ruta2node.value = "images/edit.png"
     img2.setAttributeNode(ruta2node)
     const clase1 = document.createAttribute("class");
     clase1.value = "icon";
